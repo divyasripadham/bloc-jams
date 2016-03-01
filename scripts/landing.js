@@ -2,8 +2,6 @@ var pointsArray = document.getElementsByClassName('point');
 
 var animatePoints = function(points) {
 
-     var points = document.getElementsByClassName('point');
-
      var revealPoint = function(index) {
          points[index].style.opacity = 1;
          points[index].style.transform = "scaleX(1) translateY(0)";
@@ -11,9 +9,7 @@ var animatePoints = function(points) {
          points[index].style.WebkitTransform = "scaleX(1) translateY(0)";
      };
 
-     for(var i=0;i<points.length;i++){
-        revealPoint(i);
-     }
+    forEach(points,revealPoint);
 
  };
 
@@ -28,7 +24,7 @@ var animatePoints = function(points) {
     if(document.documentElement.scrollTop || document.body.scrollTop >= scrollDistance){
       animatePoints(pointsArray);
     }
-    
+
     window.addEventListener('scroll',function(event){
       if(document.documentElement.scrollTop || document.body.scrollTop >= scrollDistance){
         animatePoints(pointsArray);
