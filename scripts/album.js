@@ -28,6 +28,21 @@ var albumPicasso = {
      ]
  };
 
+ var albumColdplay = {
+     title: 'Adventure',
+     artist: 'David Goodenough',
+     label: 'EM',
+     year: '2009',
+     albumArtUrl: 'assets/images/album_covers/11.png',
+     songs: [
+         { title: 'Hello, coldplay', duration: '1:01' },
+         { title: 'Swing, swing, coldplay', duration: '5:01' },
+         { title: 'Coldplay in your pocket', duration: '3:21'},
+         { title: 'Can you hear me now coldplay?', duration: '3:14' },
+         { title: 'Wrong phone number coldplay', duration: '2:15'}
+     ]
+ };
+
  var createSongRow = function(songNumber, songName, songLength){
    var template = '<tr class="album-view-song-item">'
       + '  <td class="song-item-number">' + songNumber + '</td>'
@@ -61,3 +76,11 @@ var albumPicasso = {
  window.onload = function(){
       setCurrentAlbum(albumPicasso);
  };
+
+ var count=1;
+ document.getElementsByClassName('album-cover-art')[0].addEventListener("click",myFunction);
+ function myFunction(){
+    var albumArray = [albumPicasso,albumMarconi,albumColdplay];
+    setCurrentAlbum(albumArray[count%albumArray.length]);
+    count++;
+ }
