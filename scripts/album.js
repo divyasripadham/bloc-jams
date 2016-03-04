@@ -75,12 +75,11 @@ var albumPicasso = {
 
  window.onload = function(){
       setCurrentAlbum(albumPicasso);
- };
+      var index=1;
+      var albumArray = [albumPicasso,albumMarconi,albumColdplay];
 
- var count=1;
- document.getElementsByClassName('album-cover-art')[0].addEventListener("click",myFunction);
- function myFunction(){
-    var albumArray = [albumPicasso,albumMarconi,albumColdplay];
-    setCurrentAlbum(albumArray[count%albumArray.length]);
-    count++;
- }
+      document.getElementsByClassName('album-cover-art')[0].addEventListener("click", function(event) {
+        setCurrentAlbum(albumArray[index%albumArray.length]);
+        index++;
+      });
+ };
