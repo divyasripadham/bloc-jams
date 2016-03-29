@@ -1,9 +1,28 @@
-var updateSeekBarWhileSongPlays = function(){
+var filterTimeCode = function(timeInSeconds) {
+    seconds = parseFloat(timeInSeconds);
+    wholeMinutes = Math.floor(seconds/60);
+    wholeSeconds = Math.floor(seconds%60);
+    wholeSecondsFormatted = wholeSeconds > 9 ? ""+wholeSeconds : "0"+wholeSeconds;
+    // console.log(wholeMinutes+":"+wholeSecondsFormatted);
+    return wholeMinutes+":"+wholeSecondsFormatted;
+};
+
+var setTotalTimeInPlayerBar = function(totalTime) {
+    $('.seek-control .total-time').text(totalTime);
+};
+
+var setCurrentTimeInPlayerBar = function(currentTime) {
+    $('.seek-control .current-time').text(currentTime);
+};
+
+var updateSeekBarWhileSongPlays = function() {
     if(currentSoundFile) {
       currentSoundFile.bind('timeupdate', function(event){
         var seekBarFillRatio = this.getTime()/this.getDuration();
         var $seekBar = $('.seek-control .seek-bar');
         updateSeekPercentage($seekBar, seekBarFillRatio);
+        setCurrentTimeInPlayerBar(filterTimeCode(this.getTime()));
+        setTotalTimeInPlayerBar(filterTimeCode(this.getDuration()));
       });
     }
 };
@@ -98,7 +117,7 @@ var createSongRow = function(songNumber, songName, songLength){
    var template = '<tr class="album-view-song-item">'
       + '  <td class="song-item-number" data-song-number="' + songNumber + '">' + songNumber + '</td>'
       + '  <td class="song-item-title">' + songName + '</td>'
-      + '  <td class="song-item-duration">' + songLength + '</td>'
+      + '  <td class="song-item-duration">' + filterTimeCode(songLength) + '</td>'
       + '</tr>'
       ;
    var $row = $(template);
@@ -256,6 +275,8 @@ var createSongRow = function(songNumber, songName, songLength){
     $('.currently-playing .artist-name').text(currentAlbum.artist);
     $('.currently-playing .artist-song-mobile').text(currentSongFromAlbum.title + " - " + currentAlbum.artist);
     $('.main-controls .play-pause').html(playerBarPauseButton);
+    console.log(currentSoundFile.getDuration());
+    setTotalTimeInPlayerBar(currentSoundFile.getDuration());
 };
 
  var playButtonTemplate = '<a class="album-song-button"><span class="ion-play"></span></a>';
